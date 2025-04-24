@@ -29,16 +29,23 @@ function generateNewGrid(size) {
             let darkness = parseFloat(square.getAttribute('currentDarkness'));
 
             if (darkness < 1) {
-                darkness += 0.1;
-
-                // Set new color
+                // Increase darkness
+                darkness = Number( (darkness + 0.1).toFixed(1) );
                 square.setAttribute('currentDarkness', darkness);
-                square.style.backgroundColor = `rgba(0, 0, 255, ${darkness})`;
             }
+
+            // Assign random color with current darkness
+            function getRandomColor() {
+                var r = Math.floor(Math.random() * 256); // Random between 0-255
+                var g = Math.floor(Math.random() * 256); // Random between 0-255
+                var b = Math.floor(Math.random() * 256); // Random between 0-255
+                return { r, g, b };
+            }
+            var color = getRandomColor(); // Call the function
+            square.style.backgroundColor = `rgba(${color.r}, ${color.g}, ${color.b}, ${darkness})`;
         });
         container.appendChild(square);
     }
 }
 
 generateNewGrid(16);
-
